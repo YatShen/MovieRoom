@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\ValidationException;
+use \Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        \API::error(function (ValidationException $exception) {
+            return response()->json(['errMsg' => array_first(array_collapse($exception->errors())), 'respCode' => 400], 200);
+        });
+        \API::error(function (HttpException $exception) {
+            return response()->json(['errMsg' => $exception->getMessage(), 'respCode' => $exception->getStatusCode()], 200);
+        });
     }
 }

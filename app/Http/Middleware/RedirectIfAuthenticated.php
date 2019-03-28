@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class RedirectIfAuthenticated
 {
@@ -17,8 +17,19 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+        if (auth('api')->check()) {
+            // 已经登录
+//            $user = Auth::user();
+//            return response()->json([
+//                'data' => [
+//                    'token' => auth('api')->getToken(),
+//                    'account' => $user->account,
+//                    'name' => $user->name,
+//                    'mobile' => $user->mobile,
+//                    'email' => $user->email
+//                ],
+//                'respCode' => 200
+//            ], 200);
         }
 
         return $next($request);

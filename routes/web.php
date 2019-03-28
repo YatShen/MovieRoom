@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'index');
+
+Route::view('login', 'index')->name('login');
+
+Route::view('dashboard', 'index')->name('dashboard');
+
+Route::get('test', 'TestController@index')->name('test');
+//Route::view('/home/{query}', 'index')
+//    ->where('query', '.*');
+//Route::get('/', 'StaticPagesController@home')->name('home');
+//Route::get('/home', 'StaticPagesController@home')->name('home');
